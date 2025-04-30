@@ -1,41 +1,43 @@
 #include <iostream>
 
-class B {                     // ¿B de qué?
-    int a[10];                // ¿qué es “a”?
-    int i = 0;                // índice… ¿“i” de qué?
+class ColeccionNumeros {
+    int numeros[10];
+    int cantidad = 0;
+
 public:
-    void x(int v) {           // “x” agrega… ¿qué?  “v” tampoco dice mucho
-        a[i++] = v;
+    void agregarNumero(int valor) {
+        numeros[cantidad++] = valor;
     }
 
-    int y() {                 // “y” calcula la suma
-        int s = 0;            // “s”… ¿suma? ¿salario?
-        for (int j = 0; j < i; ++j) { // “j” → contador, pero poco claro
-            s += a[j];
+    int calcularSuma() {
+        int suma = 0;
+        for (int indice = 0; indice < cantidad; ++indice) {
+            suma += numeros[indice];
         }
-        return s;
+        return suma;
     }
 
-    double z() {              // “z” devuelve el promedio
-        return i == 0 ? 0.0 : static_cast<double>(y()) / i;
+    double calcularPromedio() {
+        return cantidad == 0 ? 0.0 : static_cast<double>(calcularSuma()) / cantidad;
     }
 };
 
 int main() {
-    B p;                      // Objeto “p”… ¿de qué?
-    int t;                    // “t” → ¿total? no queda claro
+    ColeccionNumeros coleccion;
+    int cantidadIngresos;
 
     std::cout << "¿Cuántos números ingresará? ";
-    std::cin  >> t;
+    std::cin >> cantidadIngresos;
 
-    for (int k = 0; k < t; ++k) { // “k” → contador genérico
+    for (int indiceIngreso = 0; indiceIngreso < cantidadIngresos; ++indiceIngreso) {
         std::cout << "Número: ";
-        int d;                // “d” → ¿dato? poco informativo
-        std::cin >> d;
-        p.x(d);
+        int valorIngresado;
+        std::cin >> valorIngresado;
+        coleccion.agregarNumero(valorIngresado);
     }
 
-    std::cout << "Suma = "      << p.y() << '\n';
-    std::cout << "Promedio = "  << p.z() << '\n';
+    std::cout << "Suma = " << coleccion.calcularSuma() << '\n';
+    std::cout << "Promedio = " << coleccion.calcularPromedio() << '\n';
+
     return 0;
 }
