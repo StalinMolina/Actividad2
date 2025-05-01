@@ -1,41 +1,47 @@
 #include <iostream>
 
-class B {                     // ¿B de qué?
-    int a[10];                // ¿qué es “a”?
-    int i = 0;                // índice… ¿“i” de qué?
+class Acumulador {
+    int numeros[10];
+    int cantidad = 0;
+
 public:
-    void x(int v) {           // “x” agrega… ¿qué?  “v” tampoco dice mucho
-        a[i++] = v;
-    }
-
-    int y() {                 // “y” calcula la suma
-        int s = 0;            // “s”… ¿suma? ¿salario?
-        for (int j = 0; j < i; ++j) { // “j” → contador, pero poco claro
-            s += a[j];
+    void agregarNumero(int valor) {
+        if (cantidad < 10) {
+            numeros[cantidad++] = valor;
+        } else {
+            std::cerr << "Se alcanzó el límite de 10 números.\n";
         }
-        return s;
     }
 
-    double z() {              // “z” devuelve el promedio
-        return i == 0 ? 0.0 : static_cast<double>(y()) / i;
+    int obtenerSuma() {
+        int suma = 0;
+        for (int indice = 0; indice < cantidad; ++indice) {
+            suma += numeros[indice];
+        }
+        return suma;
+    }
+
+    double obtenerPromedio() {
+        return cantidad == 0 ? 0.0 : static_cast<double>(obtenerSuma()) / cantidad;
     }
 };
 
 int main() {
-    B p;                      // Objeto “p”… ¿de qué?
-    int t;                    // “t” → ¿total? no queda claro
+    Acumulador acumulador;
+    int cantidadNumeros;
 
     std::cout << "¿Cuántos números ingresará? ";
-    std::cin  >> t;
+    std::cin >> cantidadNumeros;
 
-    for (int k = 0; k < t; ++k) { // “k” → contador genérico
+    for (int contador = 0; contador < cantidadNumeros; ++contador) {
+        int numero;
         std::cout << "Número: ";
-        int d;                // “d” → ¿dato? poco informativo
-        std::cin >> d;
-        p.x(d);
+        std::cin >> numero;
+        acumulador.agregarNumero(numero);
     }
 
-    std::cout << "Suma = "      << p.y() << '\n';
-    std::cout << "Promedio = "  << p.z() << '\n';
+    std::cout << "Suma = " << acumulador.obtenerSuma() << '\n';
+    std::cout << "Promedio = " << acumulador.obtenerPromedio() << '\n';
+
     return 0;
 }
