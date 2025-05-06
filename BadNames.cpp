@@ -1,47 +1,41 @@
 #include <iostream>
 
-class Acumulador {
-    int numeros[10];
-    int cantidad = 0;
-
+class ListaDeNumeros {
+    int numeros[10];                
+    int cantidadNumeros = 0;        
 public:
-    void agregarNumero(int valor) {
-        if (cantidad < 10) {
-            numeros[cantidad++] = valor;
-        } else {
-            std::cerr << "Se alcanzó el límite de 10 números.\n";
-        }
+    void agregarNumero(int numero) {
+        numeros[cantidadNumeros++] = numero;
     }
 
-    int obtenerSuma() {
+    int calcularSuma() {
         int suma = 0;
-        for (int indice = 0; indice < cantidad; ++indice) {
+        for (int indice = 0; indice < cantidadNumeros; ++indice) {
             suma += numeros[indice];
         }
         return suma;
     }
 
-    double obtenerPromedio() {
-        return cantidad == 0 ? 0.0 : static_cast<double>(obtenerSuma()) / cantidad;
+    double calcularPromedio() {
+        return cantidadNumeros == 0 ? 0.0 : static_cast<double>(calcularSuma()) / cantidadNumeros;
     }
 };
 
 int main() {
-    Acumulador acumulador;
-    int cantidadNumeros;
+    ListaDeNumeros lista;                 
+    int cantidadIngresos;                
 
     std::cout << "¿Cuántos números ingresará? ";
-    std::cin >> cantidadNumeros;
+    std::cin  >> cantidadIngresos;
 
-    for (int contador = 0; contador < cantidadNumeros; ++contador) {
-        int numero;
+    for (int contador = 0; contador < cantidadIngresos; ++contador) {
         std::cout << "Número: ";
-        std::cin >> numero;
-        acumulador.agregarNumero(numero);
+        int numeroIngresado;
+        std::cin >> numeroIngresado;
+        lista.agregarNumero(numeroIngresado);
     }
 
-    std::cout << "Suma = " << acumulador.obtenerSuma() << '\n';
-    std::cout << "Promedio = " << acumulador.obtenerPromedio() << '\n';
-
+    std::cout << "Suma = " << lista.calcularSuma() << '\n';
+    std::cout << "Promedio = " << lista.calcularPromedio() << '\n';
     return 0;
 }
